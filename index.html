@@ -1,27 +1,127 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="jquery.js"></script>
+  <link rel="stylesheet" href="style.css">
+    <script src="jquery-3.4.1.js"></script>
+	<script src="moment.js"></script>
+	<script src="livestamp.js"></script>
     <script src="data_generator.js"></script>
   </head>
   <body>
+  <header>Chris' Tweedledee</header>
+		<div class='tweets'>
+			<section class='mainFeed'></section>
+			<section class='newTweedle'></section>
+		</div>
+		<footer> 
+			<div>
+				Hack Reactor © 2019
+			</div>
+		</footer>
     <script>
-
       $(document).ready(function(){
-        var $body = $('body');
-        $body.html('');
 
+        var $body = $('.tweets');
         var index = streams.home.length - 1;
         while(index >= 0){
           var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $tweet.appendTo($body);
+          var $tweet = $('<div class=tweet></div>');
+		  var $user = $('<p class=user></p>');
+		  var $message = $('<p class=message></p>');
+		  var $dateTime = $('<span class=dateTime></span>');
+          //$tweet.text('@' + tweet.user + ': ' + tweet.message);
+          $tweet.appendTo('.mainFeed');
+		  // must be rewritten so user can be referenced via the tweet div class for separating tweets.
+		  $user.addClass(tweet.user)
+			  .attr('data-user', tweet.user)
+			  .text('@' + tweet.user + ' ')
+			  .appendTo($tweet);
+		  $message.text(tweet.message)
+			  .appendTo($tweet);
+		  $dateTime.attr('data-livestamp', tweet.created_at.toUTCString()).appendTo($tweet);
+		  
           index -= 1;
         }
+		
+		
+		// Show the user new tweets somehow. (You can show them automatically as they're created, or create a button that displays new tweets.)
+		
+		var $button = $("<input class='btn New' type=button value='New Tweedle'>");
+		$button.appendTo('.newTweedle');
+	        $button.on('click', function () {
+          generateRandomTweet();
+          
+          var newTweet = streams.home.pop();
+          
+          var $newTweet = $('<div class=tweet></div>');
+          var $newUser = $('<p class=user></p>');
+          var $newMessage = $('<p class=message></p>');
+          var $livestamp = $('<span class=dateTime></span>');
+		  
+		  /*$newTweet.text('@' + newTweet.user + ': ' + newTweet.message);
+          $newTweet.appendTo('.mainFeed');
+		  $livestamp.attr('data-livestamp', new Date().toUTCString()).appendTo($newTweet);*/
+		  $newTweet.appendTo('.mainFeed');
+          $newUser.addClass(newTweet.user).attr('data-user', newTweet.user).text('@' + newTweet.user + ' ')
+				.appendTo($newTweet);
+		  $newMessage.text(newTweet.message)
+				.appendTo($newTweet);
+          $livestamp.attr('data-livestamp', new Date().toUTCString()).appendTo($newTweet);
 
-      });
+		 $('.mainFeed').animate({scrollTop: $('.mainFeed').prop("scrollHeight")}, 'slow');
+      
+        });
+		
 
+		// Allow the user to click on a username to see that user's timeline.
+		
+		
+        var $homeButton = $("<input class='btn home' type=button value='Home'>");
+        $homeButton.on('click', function(event){
+           event.preventDefault();
+           $('.userTweedles').remove();
+           $('div').show(400);
+           $('.New').show(400);
+           $homeButton.hide(400);
+        });
+        $homeButton.insertAfter($button).hide();
+
+        
+        $('.tweets').on('mouseover', '.tweet .user', function(){
+          $(this).addClass('hover');
+        });
+        
+        $('.tweets').on('mouseleave', '.tweet .user', function(){
+          $(this).removeClass('hover');
+        });
+        
+        
+        
+        $('.tweets').on('click', '.tweet .user', function(event){
+          event.preventDefault();
+          
+          var user = $(this).data('user');
+          
+          $('.userTweedles').remove();
+          var $userTweedles = $('<h1 class=userTweedles>Recent tweedles from '+ user + '</h1>');
+          $userTweedles.prependTo($body);
+          $('.New').hide();
+          $homeButton.show(400);
+          
+          $('.tweet').not("div:contains('" + user + "')").hide(400);
+          $("div:contains('" + user + "')").show(400);
+          
+        });	
+		
+	
+
+		
+      }); // end of document function
+	  
+
+	
+
+	
     </script>
   </body>
 </html>
