@@ -1,0 +1,84 @@
+body {
+	background-color: white;
+}
+header {
+	text-align: center;
+	margin-top: 30px;
+	padding-top: 20px;
+	height: 50px;
+	color: pink;
+	background-color: black;
+	font-size: 24pt;
+	font-family: sans-serif, verdana, arial;
+}
+
+footer {
+	text-align: center;
+	margin-top: 30px;
+	margin: 5px;
+	padding-top: 20px;
+	height: 50px;
+	color: pink;
+	background-color: black;
+	font-size: 10pt;
+}
+
+.mainFeed {
+	font-size: 12pt;
+	margin-bottom: 5px;
+	padding-left: 20px;
+	padding-top: 10px;
+	height: 350px;
+	width: auto;
+	overflow-y: auto;
+	background-color: #eeeeee;
+}
+
+.newTweedle {
+	padding-left: 20px;
+	width: 490px;
+	font-size: 12pt;
+}
+
+.newTweedles {
+	font-family: sans-serif, helvetica, verdana, arial;
+}
+
+.btn {
+	height: 45px;
+	width: 180px;
+	text-align: center;
+	background-color: black;
+	color: pink;
+	font-family: sans-serif, helvetica, verdana, arial;
+	font-size: 16pt;
+}
+
+.user {
+	color: #FF1493;
+	font-family: sans-serif, helvetica, verdana, arial;
+	font-weight: bold;
+}
+
+.message {
+	color: black;
+	font-weight: none;
+	font-family: sans-serif, helvetica, verdana, arial;
+}
+
+.hover {
+	color: #FFB6C1;
+	cursor: pointer;
+}
+.timeline {
+	font-family: sans-serif, helvetica, verdana, arial;
+}
+
+.dateTime {
+	font-size: 9pt;
+	font-style: italic;
+	font-family: sans-serif;
+	display: inline;
+	color: gray;
+	padding-left: 10px;
+}
